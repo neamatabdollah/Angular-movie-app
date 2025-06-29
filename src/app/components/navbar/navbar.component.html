@@ -1,1 +1,85 @@
-<p>navbar works!</p>
+<p-menubar  class="navbar border-none shadow-2 surface-card">
+  <ng-template pTemplate="start">
+    <div class="flex align-items-center gap-4 logo-group">
+      <div class="flex align-items-center gap-2">
+        <i class="pi pi-video text-3xl text-primary"></i>
+        <h2 class="m-0 text-primary font-bold text-xl md:text-2xl">MovieApp</h2>
+      </div>
+      <div class="flex gap-2 nav-links">
+        <p-button
+          label="Movies"
+          [text]="true"
+          routerLink="/movies"
+          routerLinkActive="p-button-outlined"
+          icon="pi pi-play">
+        </p-button>
+        <p-button
+          label="TV Shows"
+          [text]="true"
+          routerLink="/tv-shows"
+          routerLinkActive="p-button-outlined"
+          icon="pi pi-desktop">
+        </p-button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div class="flex align-items-center gap-3 navbar-actions">
+      <!-- Search -->
+      <div class="flex align-items-center search-group">
+        <input
+          type="text"
+          pInputText
+          placeholder="Search movies & TV shows..."
+          [value]="searchQuery()"
+          (input)="searchQuery.set($any($event.target).value)"
+          (keyup)="onSearchKeyup($event)"
+          class="search-input">
+        <p-button
+          icon="pi pi-search"
+          (onClick)="onSearch()"
+          [text]="true"
+          severity="secondary"
+          class="search-btn">
+        </p-button>
+      </div>
+
+      <!-- Language Select -->
+      <p-select
+        [options]="languages"
+        [ngModel]="languageService.language()"
+        (ngModelChange)="onLanguageChange($event)"
+        optionLabel="name"
+        [style]="{ 'min-width': '9rem' }"
+        placeholder="Language"
+        class="language-select"
+      >
+        <ng-template pTemplate="selectedItem" let-option>
+          <div class="flex align-items-center gap-2" *ngIf="option">
+            <span>{{ option.flag }}</span>
+            <span>{{ option.name }}</span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="item" let-option>
+          <div class="flex align-items-center gap-2">
+            <span>{{ option.flag }}</span>
+            <span>{{ option.name }}</span>
+          </div>
+        </ng-template>
+      </p-select>
+
+      <!-- Wishlist -->
+      <p-button
+        icon="pi pi-heart-fill"
+        [text]="true"
+        severity="danger"
+        pBadge
+        [value]="wishlistService.wishlistCount().toString()"
+        [badgeClass]="wishlistService.wishlistCount() > 0 ? 'p-badge-danger' : 'p-badge-secondary'"
+        (onClick)="navigateToWishlist()"
+        [disabled]="wishlistService.wishlistCount() === 0">
+      </p-button>
+    </div>
+  </ng-template>
+</p-menubar>
