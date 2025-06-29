@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IMovie } from '../interfaces/_movie';
 import { ITvShow } from '../interfaces/_tvshow';
-import { IGenre } from '../interfaces/_genre';
 import { ApiResponse } from '../interfaces/_api-response';
 import { IReview } from '../interfaces/_review';
 

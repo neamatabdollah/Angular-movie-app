@@ -13,4 +13,5 @@ export interface ITvShow {
   genres?: IGenre[];
   number_of_seasons?: number;
   number_of_episodes?: number;
+  tagline?: string;
 }

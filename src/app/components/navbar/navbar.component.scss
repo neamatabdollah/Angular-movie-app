@@ -1,94 +1,76 @@
-:host ::ng-deep .p-menubar {
-  width: 100%;
-  display: block;
-}
-
-:host ::ng-deep .navbar {
-  border-radius: 0.75rem;
-  transition: all 0.3s ease;
-}
-
-.logo-group {
-  flex-wrap: wrap;
-}
-
-.nav-links {
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   display: flex;
-  gap: 0.5rem;
-}
-
-.navbar-actions {
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
   flex-wrap: wrap;
+
+  padding: 1rem 2rem;
+
+  background: #f9fafb;
+
+  .wishlist-btn {
+    position: relative;
+
+    ::ng-deep .p-badge {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      transform: translate(50%, -50%);
+      z-index: 1;
+    }
+  }
 }
 
-.search-group {
-  display: flex;
-  align-items: center;
-  border-radius: 999px;
-  overflow: hidden;
-  background: var(--surface-ground);
-  transition: box-shadow 0.3s ease;
-}
-
-.search-group:hover {
-  box-shadow: 0 0 0 2px var(--primary-color);
-}
-
-.search-input {
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background: transparent;
-  padding: 0.5rem 1rem;
-  width: 12rem;
-  transition: width 0.3s ease;
-}
-
-.search-btn {
-  border-radius: 0 999px 999px 0;
-}
-
-.language-select {
-  border-radius: 2rem;
-}
-
-.p-button {
-  border-radius: 2rem;
-  transition: all 0.3s ease;
-}
-
-.p-button:hover {
-  transform: translateY(-2px);
-}
-
-.p-menubar {
-  border: none;
-}
-
-/* 🔹 Responsive tweaks */
+/* Responsive */
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
-  }
-
-  .search-input {
-    width: 8rem;
-  }
-
-  .navbar-actions {
+  .navbar {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1rem;
+
+    .navbar-right {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
   }
 }
 
 @media (max-width: 480px) {
-  .search-input {
-    width: 6rem;
+  .navbar {
+    padding: 0.75rem 1rem;
+
+    .navbar-right {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+
+    .wishlist-btn {
+      align-self: flex-end;
+    }
   }
 }
 
+:host ::ng-deep {
+  .p-button.p-button-text {
+    color: #1f2937 !important;
 
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.1) !important;
+    }
+  }
 
+  .p-dropdown {
+    border: 1px solid #d1d5db;
+
+    .p-dropdown-label {
+      color: #1f2937;
+      font-weight: 500;
+    }
+  }
+}

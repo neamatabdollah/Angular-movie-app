@@ -9,9 +9,9 @@ import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
 import { SelectModule } from 'primeng/select';
 
-
 import { WishlistService } from '../../services/wishlist.service';
 import { LanguagesService, Language } from '../../services/languages.service';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-navbar',
@@ -23,6 +23,7 @@ import { LanguagesService, Language } from '../../services/languages.service';
     InputTextModule,
     ButtonModule,
     SelectModule,
+    DropdownModule,
     BadgeModule,
   ],
   templateUrl: './navbar.component.html',
@@ -62,5 +63,9 @@ export class NavbarComponent {
     if (event.key === 'Enter') {
       this.onSearch();
     }
+  }
+
+  navigateHome(): void {
+    this.router.navigate(['/home']);
   }
 }

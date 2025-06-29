@@ -1,4 +1,4 @@
-<p-menubar  class="navbar border-none shadow-2 surface-card">
+<!-- <p-menubar  class="navbar border-none shadow-2 surface-card">
   <ng-template pTemplate="start">
     <div class="flex align-items-center gap-4 logo-group">
       <div class="flex align-items-center gap-2">
@@ -26,7 +26,7 @@
 
   <ng-template pTemplate="end">
     <div class="flex align-items-center gap-3 navbar-actions">
-      <!-- Search -->
+
       <div class="flex align-items-center search-group">
         <input
           type="text"
@@ -45,7 +45,6 @@
         </p-button>
       </div>
 
-      <!-- Language Select -->
       <p-select
         [options]="languages"
         [ngModel]="languageService.language()"
@@ -69,7 +68,8 @@
         </ng-template>
       </p-select>
 
-      <!-- Wishlist -->
+
+
       <p-button
         icon="pi pi-heart-fill"
         [text]="true"
@@ -82,4 +82,49 @@
       </p-button>
     </div>
   </ng-template>
-</p-menubar>
+</p-menubar> -->
+
+<nav class="navbar bg-yellow-400 px-4 py-3 shadow-2">
+  <div class="flex justify-content-between align-items-center w-full">
+    <!-- Logo -->
+    <div class="flex align-items-center cursor-pointer" (click)="navigateHome()">
+      <h2 class="m-0 text-900 font-bold">Movie App</h2>
+    </div>
+
+    <!-- Right Section -->
+    <div class="flex align-items-center gap-3">
+      <!-- Language Dropdown -->
+      <p-dropdown
+        [options]="languages"
+        [ngModel]="languageService.language()"
+        (ngModelChange)="onLanguageChange($event)"
+        optionLabel="name"
+        [style]="{'min-width': '4rem'}"
+        [panelStyle]="{'min-width': '6rem'}"
+        placeholder="En">
+        <ng-template pTemplate="selectedItem" let-option>
+          <span *ngIf="option">{{ option.name }}</span>
+        </ng-template>
+        <ng-template pTemplate="item" let-option>
+          <div class="flex align-items-center gap-2">
+            <span>{{ option.flag }}</span>
+            <span>{{ option.name }}</span>
+          </div>
+        </ng-template>
+      </p-dropdown>
+
+      <!-- Wishlist Button -->
+      <p-button
+        icon="pi pi-heart-fill"
+        [text]="true"
+        severity="danger"
+        size="large"
+        pBadge
+        [value]="wishlistService.wishlistCount().toString()"
+        [badgeClass]="wishlistService.wishlistCount() > 0 ? 'p-badge-danger' : 'p-badge-secondary'"
+        (onClick)="navigateToWishlist()"
+        class="wishlist-btn">
+      </p-button>
+    </div>
+  </div>
+</nav>
