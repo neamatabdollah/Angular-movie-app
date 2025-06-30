@@ -7,13 +7,6 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'movies',
-    loadComponent: () =>
-      import('./components/movies-list/movies-list.component').then(
-        (m) => m.MoviesListComponent
-      ),
-  },
-  {
     path: 'home',
     loadComponent: () =>
       import('./components/movies-list/movies-list.component').then(

@@ -1,1 +1,30 @@
-<p>movie-card works!</p>
+<div *ngIf="item" class="movie-card cursor-pointer" (click)="onCardClick()">
+  <div class="movie-poster-container">
+    <img
+      [src]="getImageUrl(item.poster_path || '')"
+      [alt]="title()"
+      class="movie-poster"
+      loading="lazy">
+
+    <!-- Rating Badge -->
+    <div class="rating-badge">
+      {{ (item.vote_average * 10) | number:'1.0-0' }}
+    </div>
+
+    <!-- Wishlist Button -->
+    <p-button
+      [icon]="isInWishlist() ? 'pi pi-heart-fill' : 'pi pi-heart'"
+      [text]="true"
+      [rounded]="true"
+      [severity]="isInWishlist() ? 'danger' : 'secondary'"
+      class="wishlist-btn"
+      size="small"
+      (onClick)="toggleWishlist($event)">
+    </p-button>
+  </div>
+
+  <div class="movie-info">
+    <h3 class="movie-title">{{ title() }}</h3>
+    <p class="movie-date">{{ getFormattedDate() }}</p>
+  </div>
+</div>

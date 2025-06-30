@@ -12,7 +12,7 @@ import { IReview } from '../interfaces/_review';
 export class MovieService {
   private apiKey = '501610b3365954e60383a769e48bae01';
   private baseUrl = 'https://api.themoviedb.org/3';
-  private imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
+  private imageBaseUrl = 'https://image.tmdb.org/t/p/';
 
   constructor(private http: HttpClient) {}
 
@@ -92,16 +92,18 @@ export class MovieService {
     );
   }
 
+
+  // imageBaseUrl = 'https://image.tmdb.org/t/p/'
   // Utility methods
   getImageUrl(path: string, size: string = 'w500'): string {
     return path
-      ? `https://image.tmdb.org/t/p/${size}${path}`
+      ? `${this.imageBaseUrl}${size}${path}`
       : 'assets/no-image.png';
   }
 
   getBackdropUrl(path: string): string {
     return path
-      ? `https://image.tmdb.org/t/p/w1280${path}`
+      ? `${this.imageBaseUrl}w1280${path}`
       : 'assets/no-image.png';
   }
 }

@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+:host ::ng-deep .p-paginator {
+  .p-paginator-pages .p-paginator-page {
+    border-radius: 50% !important;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.25rem;
+  }
+
+  .p-highlight {
+    background-color: #facc15 !important; // Yellow
+    color: #1f2937 !important; // Dark Gray
+    font-weight: 600;
+  }
+}
