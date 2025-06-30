@@ -1,13 +1,35 @@
-<div class="max-w-7xl mx-auto px-4 py-10">
-  <h1 class="text-3xl font-bold mb-8 text-gray-900">🎬 Now Playing</h1>
+<!-- search box -->
+<!-- <div class="pt-5"></div> -->
+<app-search (search)="handleSearch($event)"></app-search>
+@if (searchResults.length > 0) {
+<!-- Search Results -->
+<div
+  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 py-10"
+>
+  @for (movie of searchResults; track movie.id) {
+  <app-movie-card
+    [item]="movie"
+    type="movie"
+    (click)="navigateToDetails(movie.id)"
+  ></app-movie-card>
+  }
+</div>
 
-  <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+} @else {
+<!-- movies list main page -->
+<div class="max-w-7xl mx-auto px-4 py-10">
+  <h1 class="text-3xl font-bold mb-6 text-gray-900">🎬 Now Playing</h1>
+
+  <div
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+  >
+    @for (movie of movies; track movie.id) {
     <app-movie-card
-      *ngFor="let movie of movies"
       [item]="movie"
       type="movie"
-      (click)="navigateToDetails(movie.id)">
-    </app-movie-card>
+      (click)="navigateToDetails(movie.id)"
+    ></app-movie-card>
+    }
   </div>
 
   <div class="flex justify-center mt-10">
@@ -15,7 +37,9 @@
       [rows]="20"
       [totalRecords]="totalResults"
       [rowsPerPageOptions]="[20]"
-      (onPageChange)="onPageChange($event)">
+      (onPageChange)="onPageChange($event)"
+    >
     </p-paginator>
   </div>
 </div>
+}

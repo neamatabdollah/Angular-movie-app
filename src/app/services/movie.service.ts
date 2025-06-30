@@ -98,12 +98,12 @@ export class MovieService {
   getImageUrl(path: string, size: string = 'w500'): string {
     return path
       ? `${this.imageBaseUrl}${size}${path}`
-      : 'assets/no-image.png';
+      : 'assets/no-image.jpg';
   }
 
   getBackdropUrl(path: string): string {
     return path
       ? `${this.imageBaseUrl}w1280${path}`
-      : 'assets/no-image.png';
+      : 'assets/no-image.jpg';
   }
 }

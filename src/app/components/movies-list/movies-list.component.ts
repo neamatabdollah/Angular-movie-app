@@ -6,10 +6,11 @@ import { CommonModule } from '@angular/common';
 import { MovieService } from '../../services/movie.service';
 import { LanguagesService } from '../../services/languages.service';
 import { Router } from '@angular/router';
+import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'app-movies-list',
-  imports: [CommonModule, MovieCardComponent, PaginatorModule],
+  imports: [CommonModule, MovieCardComponent, PaginatorModule, SearchComponent],
   templateUrl: './movies-list.component.html',
   styleUrl: './movies-list.component.scss',
 })
@@ -17,11 +18,13 @@ export class MoviesListComponent {
   movies: IMovie[] = [];
   totalResults = 0;
   currentPage = 1;
+  searchResults: IMovie[] = [];
+  searchQuery: string = '';
 
   constructor(
     private movieService: MovieService,
-    private languagesService: LanguagesService,
-    private router: Router
+    private router: Router,
+    private language: LanguagesService
   ) {}
 
   ngOnInit() {
@@ -29,7 +32,7 @@ export class MoviesListComponent {
   }
 
   getMovies() {
-    const lang = this.languagesService.language().code;
+    const lang = this.language.language().code;
     this.movieService.getNowPlayingMovies(this.currentPage, lang).subscribe({
       next: (res) => {
         this.movies = res.results;
@@ -47,5 +50,18 @@ export class MoviesListComponent {
 
   navigateToDetails(movieId: number) {
     this.router.navigate(['/movie', movieId]);
+  }
+
+  handleSearch(query: string) {
+    this.searchQuery = query.trim();
+    if (this.searchQuery.length === 0) {
+      this.searchResults = [];
+      return;
+    }
+
+    const lang = this.language.language().code;
+    this.movieService.searchMovies(this.searchQuery, this.currentPage, lang).subscribe((res) => {
+      this.searchResults = res.results;
+    });
   }
 }
