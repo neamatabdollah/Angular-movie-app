@@ -1,5 +1,11 @@
 import { IGenre } from './_genre';
 
+export interface IProductionCompany {
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
+}
 export interface IMovie {
   id: number;
   title: string;
@@ -13,4 +19,6 @@ export interface IMovie {
   genres?: IGenre[];
   runtime?: number;
   tagline?: string;
+  homepage?: string;
+  production_companies: IProductionCompany[];
 }
