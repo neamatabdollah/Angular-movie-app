@@ -1,16 +1,29 @@
-:host {
-  display: block;
-
-  p-card {
-    cursor: pointer;
-    transition: box-shadow 0.3s;
+.tv-card {
+  &:hover {
+    transform: translateY(-6px);
   }
+}
 
-  p-card:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  }
+.tv-poster {
+  object-fit: cover;
+}
 
-  img {
-    border-radius: 6px;
+:host ::ng-deep {
+  .wishlist-btn .p-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+
+    &.p-button-text {
+      color: #6b7280 !important;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.95) !important;
+      }
+    }
+
+    &.p-button-danger {
+      color: #ef4444 !important;
+    }
   }
 }

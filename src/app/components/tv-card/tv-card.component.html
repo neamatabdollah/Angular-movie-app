@@ -1,30 +1,43 @@
-<p-card
+@if (tvShow) {
+<div
   (click)="onCardClick()"
-  class="p-mb-4 p-cursor-pointer p-shadow-2 p-hover-shadow-4"
+  class="w-full max-w-12rem mb-5 transition-transform transition-duration-300 cursor-pointer tv-card"
 >
-  @if (tvShow) {
+  <div class="relative border-round-lg overflow-hidden shadow-2">
     <img
       [src]="getImageUrl(tvShow.poster_path)"
-      [alt]="tvShow.name"
-      class="p-mb-3 p-rounded"
-      style="width: 100%; height: 320px; object-fit: cover"
+      [alt]="title()"
+      class="w-full h-20rem block tv-poster"
+      loading="lazy"
     />
+    <!-- Rating Badge -->
+    <div
+      class="absolute bottom-1 left-1 bg-black-alpha-90 text-white px-2 py-1 border-round-sm text-sm font-semibold"
+    >
+      {{ tvShow.vote_average * 10 | number : "1.0-0" }}
+    </div>
 
-    <ng-template pTemplate="title">
-      <div class="p-text-bold p-mb-1">{{ tvShow.name }}</div>
-    </ng-template>
+    <!-- wishlist button -->
+    <p-button
+      [icon]="isInWishlist() ? 'pi pi-heart-fill' : 'pi pi-heart'"
+      [text]="true"
+      [rounded]="true"
+      [severity]="isInWishlist() ? 'danger' : 'secondary'"
+      class="wishlist-btn bg-white-alpha-70"
+      size="small"
+      (onClick)="toggleWishlist($event)"
+    >
+    </p-button>
+  </div>
+  <!-- tv name -->
+  <div class="pt-3 px-1">
+    <h3
+      class="m-0 mb-1 text-base font-semibold text-gray-900 line-height-3 white-space-nowrap overflow-hidden text-overflow-ellipsis"
+    >
+      {{ title() }}
+    </h3>
+    <p class="m-0 text-sm text-gray-500">{{ getFormattedDate() }}</p>
+  </div>
+</div>
 
-    <ng-template pTemplate="content">
-      <div class="p-text-secondary">{{ tvShow.first_air_date }}</div>
-
-      <button
-        pButton
-        type="button"
-        icon="pi pi-heart"
-        label="Wishlist"
-        class="p-button-text p-mt-2"
-        (click)="toggleWishlist($event)"
-      ></button>
-    </ng-template>
-  }
-</p-card>
+}

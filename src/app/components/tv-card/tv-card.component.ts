@@ -1,22 +1,36 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { ITvShow } from '../../interfaces/_tvshow';
 import { MovieService } from '../../services/movie.service';
-import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { BadgeModule } from 'primeng/badge';
 import { WishlistService } from '../../services/wishlist.service';
 import { MessageService } from 'primeng/api';
+import { IMovie } from '../../interfaces/_movie';
 
 @Component({
   selector: 'app-tv-card',
-  imports: [CommonModule, CardModule,ButtonModule, BadgeModule],
+  imports: [CommonModule, ButtonModule],
   templateUrl: './tv-card.component.html',
   styleUrl: './tv-card.component.scss',
 })
 export class TvCardComponent {
   @Input() tvShow!: ITvShow;
+  @Input() type: 'movie' | 'tv' = 'tv';
   @Output() cardClick = new EventEmitter<void>();
+
+  title = computed(() => (this.tvShow as ITvShow).name);
+
+  releaseDate = computed(() => (this.tvShow as ITvShow).first_air_date);
+
+  isInWishlist = computed(() =>
+    this.wishlistService.isInWishlist(this.tvShow.id, this.type)
+  );
 
   constructor(
     private movieService: MovieService,
@@ -31,10 +45,10 @@ export class TvCardComponent {
   toggleWishlist(event: Event) {
     event.stopPropagation();
 
-    const exists = this.wishlistService.isInWishlist(this.tvShow.id, 'tv');
+    // const exists = this.wishlistService.isInWishlist(this.tvShow.id, 'tv');
 
-    if (exists) {
-      this.wishlistService.removeFromWishlist(this.tvShow.id, 'tv');
+    if (this.isInWishlist()) {
+      this.wishlistService.removeFromWishlist(this.tvShow.id, this.type);
       this.messageService.add({
         severity: 'info',
         summary: 'Removed',
@@ -42,7 +56,7 @@ export class TvCardComponent {
         life: 3000,
       });
     } else {
-      this.wishlistService.addToWishlist(this.tvShow, 'tv');
+      this.wishlistService.addToWishlist(this.tvShow, this.type);
       this.messageService.add({
         severity: 'success',
         summary: 'Added',
@@ -54,5 +68,14 @@ export class TvCardComponent {
 
   onCardClick() {
     this.cardClick.emit();
+  }
+    getFormattedDate(): string {
+    const date = this.releaseDate();
+    if (!date) return 'N/A';
+    return new Date(date).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
   }
 }

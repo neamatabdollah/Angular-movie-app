@@ -15,7 +15,7 @@
   }
 </div>
 
-} @else {
+} @else if (movies.length > 0) {
 <!-- movies list main page -->
 <div class="max-w-7xl mx-auto px-4 py-10">
   <h1 class="text-3xl font-bold mb-6 text-gray-900">🎬 Now Playing</h1>
@@ -42,4 +42,6 @@
     </p-paginator>
   </div>
 </div>
+} @else {
+<p class="p-text-500">Loading Movies list...</p>
 }

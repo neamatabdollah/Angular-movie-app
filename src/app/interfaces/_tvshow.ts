@@ -2,6 +2,7 @@ import { IGenre } from './_genre';
 
 export interface ITvShow {
   id: number;
+  title: string;
   name: string;
   overview: string;
   poster_path: string;

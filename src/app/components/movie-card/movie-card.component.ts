@@ -13,7 +13,6 @@ import { MovieService } from '../../services/movie.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { MessageService } from 'primeng/api';
 import { IMovie } from '../../interfaces/_movie';
-import { ITvShow } from '../../interfaces/_tvshow';
 
 @Component({
   selector: 'app-movie-card',
@@ -22,29 +21,21 @@ import { ITvShow } from '../../interfaces/_tvshow';
   styleUrl: './movie-card.component.scss',
 })
 export class MovieCardComponent {
-  @Input() item!: IMovie | ITvShow;
-  @Input() type: 'movie' | 'tv' = 'movie';
+  @Input() item!: IMovie;
+  @Input() type = 'movie';
   @Output() cardClick = new EventEmitter<void>();
 
-  title = computed(() =>
-    this.type === 'movie'
-      ? (this.item as IMovie).title
-      : (this.item as ITvShow).name
-  );
+  title = computed(() => (this.item as IMovie).title);
 
-  releaseDate = computed(() =>
-    this.type === 'movie'
-      ? (this.item as IMovie).release_date
-      : (this.item as ITvShow).first_air_date
-  );
+  releaseDate = computed(() => (this.item as IMovie).release_date);
 
   isInWishlist = computed(() =>
-    this.wishlistService.isInWishlist(this.item.id, this.type)
+    this.wishlistService.isInWishlist(this.item.id, 'movie')
   );
   constructor(
     private movieService: MovieService,
     private wishlistService: WishlistService,
-    private messageService: MessageService,
+    private messageService: MessageService
   ) {}
 
   getImageUrl(path?: string): string {
@@ -57,7 +48,7 @@ export class MovieCardComponent {
     if (this.isInWishlist()) {
       const removed = this.wishlistService.removeFromWishlist(
         this.item.id,
-        this.type
+        'movie'
       );
       if (removed) {
         this.messageService.add({
@@ -68,7 +59,7 @@ export class MovieCardComponent {
         });
       }
     } else {
-      const added = this.wishlistService.addToWishlist(this.item, this.type);
+      const added = this.wishlistService.addToWishlist(this.item, 'movie');
       if (added) {
         this.messageService.add({
           severity: 'success',
@@ -84,10 +75,10 @@ export class MovieCardComponent {
     this.cardClick.emit();
   }
 
-  getReleaseYear(): string {
-    const date = this.releaseDate();
-    return date ? new Date(date).getFullYear().toString() : 'N/A';
-  }
+  // getReleaseYear(): string {
+  //   const date = this.releaseDate();
+  //   return date ? new Date(date).getFullYear().toString() : 'N/A';
+  // }
 
   getFormattedDate(): string {
     const date = this.releaseDate();
