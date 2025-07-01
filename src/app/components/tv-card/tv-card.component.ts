@@ -11,7 +11,6 @@ import { MovieService } from '../../services/movie.service';
 import { ButtonModule } from 'primeng/button';
 import { WishlistService } from '../../services/wishlist.service';
 import { MessageService } from 'primeng/api';
-import { IMovie } from '../../interfaces/_movie';
 
 @Component({
   selector: 'app-tv-card',

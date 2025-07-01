@@ -87,10 +87,34 @@
 <nav class="navbar bg-yellow-400 px-4 py-3 shadow-2">
   <div class="flex justify-content-between align-items-center w-full">
     <!-- Logo -->
-    <div class="flex align-items-center cursor-pointer" (click)="navigateHome()">
+    <div
+      class="flex align-items-center cursor-pointer"
+      (click)="navigateHome()"
+    >
       <h2 class="m-0 text-900 font-bold">Movie App</h2>
     </div>
 
+    <!-- middle section -->
+    <div class="flex align-items-center">
+      <p-button
+        label="Movies"
+        icon="pi pi-play"
+        [text]="true"
+        routerLink="/home"
+        routerLinkActive="p-button-outlined"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="clicked-tab"
+      ></p-button>
+
+      <p-button
+        label="TV Shows"
+        icon="pi pi-desktop"
+        [text]="true"
+        routerLink="/tv-shows"
+        routerLinkActive="p-button-outlined"
+        class="clicked-tab"
+      ></p-button>
+    </div>
     <!-- Right Section -->
     <div class="flex align-items-center gap-3">
       <!-- Language Dropdown -->
@@ -99,9 +123,10 @@
         [ngModel]="languageService.language()"
         (ngModelChange)="onLanguageChange($event)"
         optionLabel="name"
-        [style]="{'min-width': '4rem'}"
-        [panelStyle]="{'min-width': '6rem'}"
-        placeholder="En">
+        [style]="{ 'min-width': '4rem' }"
+        [panelStyle]="{ 'min-width': '6rem' }"
+        placeholder="En"
+      >
         <ng-template pTemplate="selectedItem" let-option>
           <span *ngIf="option">{{ option.name }}</span>
         </ng-template>
@@ -118,12 +143,17 @@
         icon="pi pi-heart-fill"
         [text]="true"
         severity="danger"
-        badgeSize="large"
+        badgeSize="small"
         pBadge
         [value]="wishlistService.wishlistCount().toString()"
-        [badgeClass]="wishlistService.wishlistCount() > 0 ? 'p-badge-danger' : 'p-badge-secondary'"
+        [badgeClass]="
+          wishlistService.wishlistCount() > 0
+            ? 'p-badge-danger'
+            : 'p-badge-secondary'
+        "
         (onClick)="navigateToWishlist()"
-        class="wishlist-btn">
+        class="wishlist-btn"
+      >
       </p-button>
     </div>
   </div>
