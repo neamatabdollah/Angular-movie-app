@@ -13,6 +13,7 @@ import { MovieService } from '../../services/movie.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { MessageService } from 'primeng/api';
 import { IMovie } from '../../interfaces/_movie';
+import { ITvShow } from '../../interfaces/_tvshow';
 
 @Component({
   selector: 'app-movie-card',
@@ -21,8 +22,8 @@ import { IMovie } from '../../interfaces/_movie';
   styleUrl: './movie-card.component.scss',
 })
 export class MovieCardComponent {
-  @Input() item!: IMovie;
-  @Input() type = 'movie';
+  @Input() item!: IMovie | ITvShow;
+  @Input() type: 'movie' | 'tv' = 'movie';
   @Output() cardClick = new EventEmitter<void>();
 
   title = computed(() => (this.item as IMovie).title);
@@ -30,7 +31,7 @@ export class MovieCardComponent {
   releaseDate = computed(() => (this.item as IMovie).release_date);
 
   isInWishlist = computed(() =>
-    this.wishlistService.isInWishlist(this.item.id, 'movie')
+    this.wishlistService.isInWishlist(this.item.id, this.type)
   );
   constructor(
     private movieService: MovieService,
@@ -48,7 +49,7 @@ export class MovieCardComponent {
     if (this.isInWishlist()) {
       const removed = this.wishlistService.removeFromWishlist(
         this.item.id,
-        'movie'
+        this.type
       );
       if (removed) {
         this.messageService.add({
@@ -59,7 +60,7 @@ export class MovieCardComponent {
         });
       }
     } else {
-      const added = this.wishlistService.addToWishlist(this.item, 'movie');
+      const added = this.wishlistService.addToWishlist(this.item, this.type);
       if (added) {
         this.messageService.add({
           severity: 'success',

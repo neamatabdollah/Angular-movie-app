@@ -1,11 +1,53 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { WishlistService } from '../../services/wishlist.service';
+import { MovieCardComponent } from '../movie-card/movie-card.component';
+import { TvCardComponent } from '../tv-card/tv-card.component';
+import { ButtonModule } from 'primeng/button';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { IMovie } from '../../interfaces/_movie';
+import { ITvShow } from '../../interfaces/_tvshow';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-wishlist',
-  imports: [],
+  imports: [
+    CommonModule,
+    MovieCardComponent,
+    TvCardComponent,
+    ButtonModule,
+    ConfirmDialogModule,
+  ],
   templateUrl: './wishlist.component.html',
-  styleUrl: './wishlist.component.scss'
+  styleUrl: './wishlist.component.scss',
+  providers: [ConfirmationService, MessageService],
 })
 export class WishlistComponent {
+  constructor(
+    public wishlistService: WishlistService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private router: Router
+  ) {}
 
+  clearWishlist() {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to clear your wishlist?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.wishlistService.clearWishlist();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Cleared',
+          detail: 'Your wishlist has been cleared.',
+        });
+      },
+    });
+  }
+
+  navigateHome(): void {
+    this.router.navigate(['/home']);
+  }
 }

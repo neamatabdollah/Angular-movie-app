@@ -11,6 +11,7 @@ import { MovieService } from '../../services/movie.service';
 import { ButtonModule } from 'primeng/button';
 import { WishlistService } from '../../services/wishlist.service';
 import { MessageService } from 'primeng/api';
+import { IMovie } from '../../interfaces/_movie';
 
 @Component({
   selector: 'app-tv-card',
@@ -19,11 +20,11 @@ import { MessageService } from 'primeng/api';
   styleUrl: './tv-card.component.scss',
 })
 export class TvCardComponent {
-  @Input() tvShow!: ITvShow;
+  @Input() tvShow!: ITvShow | IMovie;
   @Input() type: 'movie' | 'tv' = 'tv';
   @Output() cardClick = new EventEmitter<void>();
 
-  title = computed(() => (this.tvShow as ITvShow).name);
+  title = computed(() => (this.tvShow as ITvShow).title);
 
   releaseDate = computed(() => (this.tvShow as ITvShow).first_air_date);
 
@@ -44,14 +45,14 @@ export class TvCardComponent {
   toggleWishlist(event: Event) {
     event.stopPropagation();
 
-    // const exists = this.wishlistService.isInWishlist(this.tvShow.id, 'tv');
-
+    // const exists = this.wishlistService.isInWishlist(this.tvShow.id, this.type);
+    console.log(this.tvShow.title);
     if (this.isInWishlist()) {
       this.wishlistService.removeFromWishlist(this.tvShow.id, this.type);
       this.messageService.add({
         severity: 'info',
         summary: 'Removed',
-        detail: `${this.tvShow.name} removed from wishlist`,
+        detail: `${this.tvShow.title} removed from wishlist`,
         life: 3000,
       });
     } else {
@@ -59,7 +60,7 @@ export class TvCardComponent {
       this.messageService.add({
         severity: 'success',
         summary: 'Added',
-        detail: `${this.tvShow.name} added to wishlist`,
+        detail: `${this.tvShow.title} added to wishlist`,
         life: 3000,
       });
     }
