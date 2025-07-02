@@ -1,6 +1,7 @@
 // @import "primeflex/primeflex.css";
 body {
   font-family: "Poppins", sans-serif;
+  color: #111 !important;
 }
 
 :host ::ng-deep .p-paginator {
@@ -20,4 +21,4 @@ body {
     font-weight: 600;
   }
 }
-//
+
