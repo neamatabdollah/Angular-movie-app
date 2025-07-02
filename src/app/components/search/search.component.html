@@ -1,11 +1,14 @@
 <div class="my-3 py-5 pl-3 bg-gray-100">
   <h1>Welcome to our movie app</h1>
   <p>Millions of movies, TV shows and people to discover. Explore now.</p>
-  <div class="flex items-center justify-center gap-3 w-full">
+  <div class="flex items-center justify-center gap-3 w-full p-inputgroup">
     <input
       type="text"
+      pInputText
       [(ngModel)]="query"
       placeholder="Search movies..."
+      (keyup)="onKeyUp($event)"
+      (keydown.enter)="onSearch()"
       class="search-input border-none border-round-lg p-2 w-9"
     />
     <button

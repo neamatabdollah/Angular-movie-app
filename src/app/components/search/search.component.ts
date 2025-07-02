@@ -14,6 +14,12 @@ export class SearchComponent {
 
   @Output() search = new EventEmitter<string>();
 
+  // Emit when typing
+  onKeyUp(event: KeyboardEvent) {
+    this.search.emit(this.query.trim());
+  }
+
+  // Emit when clicking the button
   onSearch() {
     if (this.query.trim().length > 0) {
       this.search.emit(this.query);

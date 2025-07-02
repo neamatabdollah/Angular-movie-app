@@ -1,10 +1,11 @@
 <!-- search box -->
-<!-- <div class="pt-5"></div> -->
 <app-search (search)="handleSearch($event)"></app-search>
+<!-- if there are search results -->
 @if (searchResults.length > 0) {
 <!-- Search Results -->
 <div
-  class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 py-10"
+  style="width: 95%; margin: auto"
+  class="flex justify-content-between flex-wrap gap-2 py-10"
 >
   @for (movie of searchResults; track movie.id) {
   <app-movie-card
@@ -14,14 +15,20 @@
   ></app-movie-card>
   }
 </div>
-
-} @else if (movies.length > 0) {
+<!-- if there aren't a search result to render -->
+} @else if (searchQuery.length > 0) {
+<p class="text-center text-lg text-gray-500 py-10">
+  No results found for “{{ searchQuery }}”.
+</p>
+<!-- if i don't write anything in the search field -->
+}@else if (movies.length > 0) {
 <!-- movies list main page -->
-<div class="max-w-7xl mx-auto px-4 py-10">
+<div class="px-4 py-10">
   <h1 class="text-3xl font-bold mb-6 text-gray-900">🎬 Now Playing</h1>
 
   <div
-    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+    style="width: 95%; margin: auto"
+    class="flex justify-content-between flex-wrap gap-2 py-10"
   >
     @for (movie of movies; track movie.id) {
     <app-movie-card
