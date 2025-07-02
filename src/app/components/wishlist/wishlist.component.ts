@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WishlistService } from '../../services/wishlist.service';
+import { WishlistItem, WishlistService } from '../../services/wishlist.service';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { TvCardComponent } from '../tv-card/tv-card.component';
 import { ButtonModule } from 'primeng/button';
@@ -31,6 +31,8 @@ export class WishlistComponent {
     private router: Router
   ) {}
 
+  // tvShow!: ITvShow | IMovie;
+
   clearWishlist() {
     this.confirmationService.confirm({
       message: 'Are you sure you want to clear your wishlist?',
@@ -58,4 +60,9 @@ export class WishlistComponent {
   navigateToTvDetails(tvId: number) {
     this.router.navigate(['/tv', tvId]);
   }
+
+  getTvShowData(item: WishlistItem): ITvShow {
+  return item.data as ITvShow;
+}
+
 }

@@ -66,21 +66,30 @@ export class MovieService {
       `${this.baseUrl}/tv/popular?api_key=${this.apiKey}&page=${page}&language=${language}`
     );
   }
+  //baseUrl = 'https://api.themoviedb.org/3'
+  //https://api.themoviedb.org/3/tv/{series_id}
 
+  //ex:    https://api.themoviedb.org/3/tv/93405?api_key=501610b3365954e60383a769e48bae01&language=en
   getTvShowDetails(id: number, language: string = 'en'): Observable<ITvShow> {
     return this.http.get<ITvShow>(
       `${this.baseUrl}/tv/${id}?api_key=${this.apiKey}&language=${language}`
     );
   }
 
-  getTvShowRecommendations(
-    id: number,
-    language: string = 'en'
-  ): Observable<ApiResponse<ITvShow>> {
-    return this.http.get<ApiResponse<ITvShow>>(
-      `${this.baseUrl}/tv/${id}/recommendations?api_key=${this.apiKey}&language=${language}`
-    );
-  }
+  // getTvShowRecommendations(
+  //   id: number,
+  //   language: string = 'en'
+  // ): Observable<ApiResponse<ITvShow>> {
+  //   return this.http.get<ApiResponse<ITvShow>>(
+  //     `${this.baseUrl}/tv/${id}/recommendations?api_key=${this.apiKey}&language=${language}`
+  //   );
+  // }
+
+  // getTvShowReviews(id: number): Observable<ApiResponse<IReview>> {
+  //   return this.http.get<ApiResponse<IReview>>(
+  //     `${this.baseUrl}/tv/${id}/reviews?api_key=${this.apiKey}`
+  //   );
+  // }
 
   searchTvShows(
     query: string,
@@ -92,18 +101,13 @@ export class MovieService {
     );
   }
 
-
   // imageBaseUrl = 'https://image.tmdb.org/t/p/'
   // Utility methods
   getImageUrl(path: string, size: string = 'w500'): string {
-    return path
-      ? `${this.imageBaseUrl}${size}${path}`
-      : 'assets/no-image.jpg';
+    return path ? `${this.imageBaseUrl}${size}${path}` : 'assets/no-image.jpg';
   }
 
   getBackdropUrl(path: string): string {
-    return path
-      ? `${this.imageBaseUrl}w1280${path}`
-      : 'assets/no-image.jpg';
+    return path ? `${this.imageBaseUrl}w1280${path}` : 'assets/no-image.jpg';
   }
 }

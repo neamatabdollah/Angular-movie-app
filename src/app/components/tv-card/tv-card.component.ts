@@ -20,11 +20,11 @@ import { IMovie } from '../../interfaces/_movie';
   styleUrl: './tv-card.component.scss',
 })
 export class TvCardComponent {
-  @Input() tvShow!: ITvShow | IMovie;
+  @Input() tvShow!: ITvShow;
   @Input() type: 'movie' | 'tv' = 'tv';
   @Output() cardClick = new EventEmitter<void>();
 
-  title = computed(() => (this.tvShow as ITvShow).title);
+  title = computed(() => (this.tvShow as ITvShow).name);
 
   releaseDate = computed(() => (this.tvShow as ITvShow).first_air_date);
 
@@ -46,13 +46,13 @@ export class TvCardComponent {
     event.stopPropagation();
 
     // const exists = this.wishlistService.isInWishlist(this.tvShow.id, this.type);
-    console.log(this.tvShow.title);
+    console.log(this.tvShow.name);
     if (this.isInWishlist()) {
       this.wishlistService.removeFromWishlist(this.tvShow.id, this.type);
       this.messageService.add({
         severity: 'info',
         summary: 'Removed',
-        detail: `${this.tvShow.title} removed from wishlist`,
+        detail: `${this.tvShow.name} removed from wishlist`,
         life: 3000,
       });
     } else {
@@ -60,7 +60,7 @@ export class TvCardComponent {
       this.messageService.add({
         severity: 'success',
         summary: 'Added',
-        detail: `${this.tvShow.title} added to wishlist`,
+        detail: `${this.tvShow.name} added to wishlist`,
         life: 3000,
       });
     }

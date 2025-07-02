@@ -1,1 +1,143 @@
-<p>tv-details works!</p>
+@if (tvShow) {
+<!-- tvShow details -->
+<div class="flex justify-center px-4 pt-5">
+  <!-- Left: Poster -->
+  <div class="col-12 sm:col-6 md:col-5">
+    <p-card class="w-full">
+      <img
+        [src]="getImageUrl(tvShow.poster_path)"
+        [alt]="tvShow.name"
+        class="shadow-4 w-full"
+        style="border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15)"
+      />
+
+      <button
+        pButton
+        class="button-text mt-3 w-full shadow-3"
+        (click)="toggleWishlist()"
+        [label]="isInWishlist() ? 'Remove from Wishlist' : 'Add to Wishlist'"
+        [icon]="isInWishlist() ? 'pi pi-heart-fill' : 'pi pi-heart'"
+        [severity]="isInWishlist() ? 'danger' : 'primary'"
+      ></button>
+    </p-card>
+  </div>
+
+  <!-- Right: Details -->
+  <div class="col-12 sm:col-6 md:col-7">
+    <p-card>
+      <ng-template pTemplate="header" class="px-3">
+        <!-- tvSHow name -->
+        <h2 class="mb-0 mt-5 px-3">
+          {{ tvShow.name }}
+          <!-- networks -->
+          @if(tvShow.networks && tvShow.networks[0].logo_path){
+          <img
+            [src]="
+              'https://image.tmdb.org/t/p/w200' + tvShow.networks[0].logo_path
+            "
+            [alt]="tvShow.networks[0].name"
+            class="max-w-2rem max-h-1rem ml-3"
+            style="object-fit: contain; cursor: pointer"
+          />
+          }
+        </h2>
+
+        <!-- tagline -->
+        @if(tvShow.tagline){
+        <span class="text-gray-400 mb-0 mt-2 px-3 block"
+          >({{ tvShow.tagline }})</span
+        >
+        }
+
+        <!-- release date -->
+        <p class="text-gray-400 mb-0 px-3">
+          Release date: {{ tvShow.first_air_date | date : "MMM dd, yyyy" }}
+        </p>
+        <!-- Rating Section -->
+        <div class="flex align-items-center gap-3 mb-0 p-3">
+          <p-rating
+            [ngModel]="getRatingStars()"
+            [readonly]="true"
+            [stars]="5"
+            styleClass="custom-rating"
+          >
+          </p-rating>
+          <span class="text-600 font-semibold"
+            >({{ tvShow.vote_count | number }} votes)</span
+          >
+        </div>
+      </ng-template>
+      <!-- overview -->
+      <p class="tvShow-overview text-700 line-height-3 mt-0 mb-4 text-lg">
+        {{ tvShow.overview }}
+      </p>
+
+      <p-divider></p-divider>
+      <!-- tvShow Genres -->
+      <div class="flex flex-wrap gap-2">
+        @for (genre of tvShow.genres; track genre.id) {
+        <p-chip
+          [label]="genre.name"
+          styleClass="genre-chip"
+          class="bg-yellow-400"
+        >
+        </p-chip>
+        }
+      </div>
+
+      <p-divider></p-divider>
+
+      <!-- seasons and episodes number -->
+      <div class="flex align-items-center gap-2">
+        <span class="font-semibold text-600"
+          >{{ tvShow.number_of_seasons }} Seosons -
+          {{ tvShow.number_of_episodes }} episodes</span
+        >
+      </div>
+
+      <p-divider></p-divider>
+
+      <!-- Production Company -->
+      @if (tvShow.production_companies && tvShow.production_companies.length > 0
+      &&tvShow.production_companies[0].logo_path) {
+      <div class="flex flex-wrap gap-3 mb-5 py-2">
+        <img
+          [src]="
+            'https://image.tmdb.org/t/p/w200' +
+            tvShow.production_companies[0].logo_path
+          "
+          [alt]="tvShow.production_companies[0].name"
+          class="max-w-8rem max-h-4rem"
+          style="object-fit: contain"
+        />
+      </div>
+      }@else if (tvShow.production_companies &&
+      tvShow.production_companies.length > 0) {
+      <div class="mb-5">
+        <p-chip
+          [label]="tvShow.production_companies[0].name"
+          styleClass="production-chip"
+          class="bg-blue-100"
+        >
+        </p-chip>
+      </div>
+      }
+
+      <!-- Website Link -->
+      @if (tvShow.homepage) {
+      <div class="my-5">
+        <a
+          [href]="tvShow.homepage"
+          target="_blank"
+          class="website-link border-yellow-400 text-900 font-semibold transition-colors transition-duration-200 no-underline border-1 border-round-xl p-3"
+        >
+          <i class="pi pi-external-link mr-2"></i>
+          Website
+        </a>
+      </div>
+      }
+    </p-card>
+  </div>
+</div>
+
+}
