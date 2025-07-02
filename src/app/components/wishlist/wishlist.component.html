@@ -9,7 +9,10 @@
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-8"
   >
     @for (movie of wishlistService.movieWishlist(); track movie.id) {
-    <app-movie-card [item]="movie.data"></app-movie-card>
+    <app-movie-card
+      [item]="movie.data"
+      (click)="navigateToMovieDetails(movie.id)"
+    ></app-movie-card>
     }
   </div>
   }
@@ -21,7 +24,8 @@
     class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
   >
     @for (tv of wishlistService.tvWishlist(); track tv.id) {
-    <app-tv-card [tvShow]="tv.data"></app-tv-card>
+    <app-tv-card [tvShow]="tv.data"
+    (click)="navigateToTvDetails(tv.id)"></app-tv-card>
     }
   </div>
   }
@@ -41,11 +45,6 @@
     <p class="text-gray-600 mb-6">
       Browse movies and TV shows and add them to your wishlist to see them here.
     </p>
-    <!-- <p-button
-      label="Back to Home"
-      icon="pi pi-home"
-      routerLink="/home"
-    ></p-button> -->
     <p-button
       label="Back to Home"
       icon="pi pi-home"

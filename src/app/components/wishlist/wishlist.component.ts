@@ -50,4 +50,12 @@ export class WishlistComponent {
   navigateHome(): void {
     this.router.navigate(['/home']);
   }
+
+  navigateToMovieDetails(id: number) {
+    this.router.navigate(['/movie', id]);
+  }
+
+  navigateToTvDetails(tvId: number) {
+    this.router.navigate(['/tv', tvId]);
+  }
 }
