@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   EventEmitter,
+  inject,
   Input,
   Output,
 } from '@angular/core';
@@ -25,6 +26,9 @@ export class MovieCardComponent {
   @Input() item!: IMovie | ITvShow;
   @Input() type: 'movie' | 'tv' = 'movie';
   @Output() cardClick = new EventEmitter<void>();
+  private readonly movieService = inject(MovieService);
+  private readonly wishlistService = inject(WishlistService);
+  private readonly messageService = inject(MessageService);
 
   title = computed(() => (this.item as IMovie).title);
 
@@ -33,11 +37,6 @@ export class MovieCardComponent {
   isInWishlist = computed(() =>
     this.wishlistService.isInWishlist(this.item.id, this.type)
   );
-  constructor(
-    private movieService: MovieService,
-    private wishlistService: WishlistService,
-    private messageService: MessageService
-  ) {}
 
   getImageUrl(path?: string): string {
     return this.movieService.getImageUrl(path ?? '');

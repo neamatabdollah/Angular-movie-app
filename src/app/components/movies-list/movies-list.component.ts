@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { IMovie } from '../../interfaces/_movie';
 import { PaginatorModule } from 'primeng/paginator';
@@ -21,11 +21,9 @@ export class MoviesListComponent {
   searchResults: IMovie[] = [];
   searchQuery: string = '';
 
-  constructor(
-    private movieService: MovieService,
-    private router: Router,
-    private language: LanguagesService
-  ) {}
+  private readonly movieService = inject(MovieService);
+  private readonly router = inject(Router);
+  private readonly language = inject(LanguagesService);
 
   ngOnInit() {
     this.getMovies();
@@ -61,8 +59,10 @@ export class MoviesListComponent {
     }
 
     const lang = this.language.language().code;
-    this.movieService.searchMovies(this.searchQuery, this.currentPage, lang).subscribe((res) => {
-      this.searchResults = res.results;
-    });
+    this.movieService
+      .searchMovies(this.searchQuery, this.currentPage, lang)
+      .subscribe((res) => {
+        this.searchResults = res.results;
+      });
   }
 }

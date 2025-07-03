@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { LanguagesService } from '../../services/languages.service';
@@ -25,23 +25,20 @@ import { ChipModule } from 'primeng/chip';
     RatingModule,
     FormsModule,
     ChipModule,
-],
+  ],
   templateUrl: './tv-details.component.html',
   styleUrl: './tv-details.component.scss',
 })
 export class TvDetailsComponent {
+  readonly route = inject(ActivatedRoute);
+  readonly movieService = inject(MovieService);
+  readonly languageService = inject(LanguagesService);
+  readonly wishlistService = inject(WishlistService);
+  readonly messageService = inject(MessageService);
+  readonly router = inject(Router);
   tvShow!: ITvShow;
   recommendations: ITvShow[] = [];
   reviews: IReview[] = [];
-
-  constructor(
-    private route: ActivatedRoute,
-    private movieService: MovieService,
-    private languageService: LanguagesService,
-    private wishlistService: WishlistService,
-    private messageService: MessageService,
-    private router: Router
-  ) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -53,20 +50,6 @@ export class TvDetailsComponent {
           next: (res) => (this.tvShow = res),
           error: (err) => console.error(err),
         });
-
-        // this.movieService.getTvShowRecommendations(id, lang).subscribe({
-        //   next: (res) => {
-        //     console.log('TVShow Details:', res.results[0].title);
-        //     // console.log('Companies:', res.results[0]?.production_companies);
-        //     this.recommendations = res.results;
-        //   },
-        //   error: (err) => console.error(err),
-        // });
-
-        // this.movieService.getTvShowReviews(id).subscribe({
-        //   next: (res) => (this.reviews = res.results),
-        //   error: (err) => console.error(err),
-        // });
       }
     });
   }

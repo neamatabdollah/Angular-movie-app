@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IMovie } from '../interfaces/_movie';
@@ -10,11 +10,13 @@ import { IReview } from '../interfaces/_review';
   providedIn: 'root',
 })
 export class MovieService {
+    private http = inject(HttpClient);
+
   private apiKey = '501610b3365954e60383a769e48bae01';
   private baseUrl = 'https://api.themoviedb.org/3';
   private imageBaseUrl = 'https://image.tmdb.org/t/p/';
 
-  constructor(private http: HttpClient) {}
+  // constructor(private http: HttpClient) {}
 
   // Movie APIs
   getNowPlayingMovies(

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -31,15 +31,14 @@ import { DropdownModule } from 'primeng/dropdown';
 })
 export class NavbarComponent {
   searchQuery = signal('');
-  languages: Language[] = [];
+  // languages: Language[] = [];
 
-  constructor(
-    private router: Router,
-    public wishlistService: WishlistService,
-    public languageService: LanguagesService
-  ) {
-    this.languages = this.languageService.getLanguages();
-  }
+  private readonly router = inject(Router);
+  readonly wishlistService = inject(WishlistService);
+  readonly languageService = inject(LanguagesService);
+
+  readonly languages: Language[] = this.languageService.getLanguages();
+
 
   onSearch(): void {
     const query = this.searchQuery().trim();

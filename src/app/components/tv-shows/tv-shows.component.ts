@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TvCardComponent } from '../tv-card/tv-card.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { ITvShow } from '../../interfaces/_tvshow';
@@ -13,11 +13,12 @@ import { MovieService } from '../../services/movie.service';
   styleUrl: './tv-shows.component.scss',
 })
 export class TvShowsComponent {
+  readonly movieService = inject(MovieService);
+  readonly router = inject(Router);
+
   tvShows: ITvShow[] = [];
   totalResults = 0;
   currentPage = 1;
-
-  constructor(private movieService: MovieService, private router: Router) {}
 
   ngOnInit() {
     this.getTvShows();

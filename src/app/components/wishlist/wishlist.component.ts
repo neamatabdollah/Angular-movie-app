@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WishlistItem, WishlistService } from '../../services/wishlist.service';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
@@ -24,14 +24,10 @@ import { Router } from '@angular/router';
   providers: [ConfirmationService, MessageService],
 })
 export class WishlistComponent {
-  constructor(
-    public wishlistService: WishlistService,
-    private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private router: Router
-  ) {}
-
-  // tvShow!: ITvShow | IMovie;
+  readonly wishlistService = inject(WishlistService);
+  readonly confirmationService = inject(ConfirmationService);
+  readonly messageService = inject(MessageService);
+  readonly router = inject(Router);
 
   clearWishlist() {
     this.confirmationService.confirm({
@@ -62,7 +58,6 @@ export class WishlistComponent {
   }
 
   getTvShowData(item: WishlistItem): ITvShow {
-  return item.data as ITvShow;
-}
-
+    return item.data as ITvShow;
+  }
 }

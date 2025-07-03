@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { LanguagesService } from '../../services/languages.service';
@@ -28,7 +28,7 @@ import { ChipModule } from 'primeng/chip';
     DividerModule,
     RatingModule,
     FormsModule,
-    ChipModule
+    ChipModule,
   ],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.scss',
@@ -38,14 +38,12 @@ export class MovieDetailsComponent {
   recommendations: IMovie[] = [];
   reviews: IReview[] = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private movieService: MovieService,
-    private languageService: LanguagesService,
-    private wishlistService: WishlistService,
-    private messageService: MessageService,
-    private router: Router
-  ) {}
+  private readonly route = inject(ActivatedRoute);
+  private readonly movieService = inject(MovieService);
+  private readonly languageService = inject(LanguagesService);
+  private readonly wishlistService = inject(WishlistService);
+  private readonly messageService = inject(MessageService);
+  private readonly router = inject(Router);
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -62,7 +60,7 @@ export class MovieDetailsComponent {
           next: (res) => {
             // console.log('Movie Details:', res);
             // console.log('Companies:', res.results[0]?.production_companies);
-            (this.recommendations = res.results);
+            this.recommendations = res.results;
           },
           error: (err) => console.error(err),
         });
@@ -112,6 +110,4 @@ export class MovieDetailsComponent {
     if (!movie) return 0;
     return Math.round(movie.vote_average / 2);
   }
-
-
 }

@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   EventEmitter,
+  inject,
   Input,
   Output,
 } from '@angular/core';
@@ -24,19 +25,15 @@ export class TvCardComponent {
   @Input() type: 'movie' | 'tv' = 'tv';
   @Output() cardClick = new EventEmitter<void>();
 
+  private readonly movieService = inject(MovieService);
+  readonly wishlistService = inject(WishlistService);
+  private readonly messageService = inject(MessageService);
+
   title = computed(() => (this.tvShow as ITvShow).name);
-
   releaseDate = computed(() => (this.tvShow as ITvShow).first_air_date);
-
   isInWishlist = computed(() =>
     this.wishlistService.isInWishlist(this.tvShow.id, this.type)
   );
-
-  constructor(
-    private movieService: MovieService,
-    private wishlistService: WishlistService,
-    private messageService: MessageService
-  ) {}
 
   getImageUrl(path?: string): string {
     return this.movieService.getImageUrl(path ?? '');
@@ -69,7 +66,7 @@ export class TvCardComponent {
   onCardClick() {
     this.cardClick.emit();
   }
-    getFormattedDate(): string {
+  getFormattedDate(): string {
     const date = this.releaseDate();
     if (!date) return 'N/A';
     return new Date(date).toLocaleDateString('en-US', {
