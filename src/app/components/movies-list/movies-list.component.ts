@@ -7,7 +7,6 @@ import { MovieService } from '../../services/movie.service';
 import { LanguagesService } from '../../services/languages.service';
 import { Router } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-movies-list',
