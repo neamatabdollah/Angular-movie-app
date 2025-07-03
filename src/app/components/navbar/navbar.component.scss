@@ -1,78 +1,48 @@
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-
-  padding: 1rem 2rem;
-
-  background: #f9fafb;
-
-  .wishlist-btn {
-    position: relative;
-
-    ::ng-deep .p-badge {
-      position: absolute;
-      top: 0.6rem;
-      right: 0.6rem;
-      transform: translate(50%, -50%);
-      z-index: 1;
-    }
-  }
+.styled-letter {
+  display: inline-block;
+  color: rgb(15, 171, 15);
+  border: 1px solid rgb(15, 171, 15);
+  border-radius: 0 10px 0 10px;
+  padding: 0 7px;
+  margin: 0 1px;
 }
-// .clicked-tab:active{
-//   background-color: aqua !important;
-// }
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+.wishlist-btn {
+  position: relative;
 
-    .navbar-right {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-    }
+  ::ng-deep .p-badge {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 18px;
+    height: 18px;
+    transform: translate(50%, -50%);
+    z-index: 1;
   }
-}
 
-@media (max-width: 480px) {
-  .navbar {
-    padding: 0.75rem 1rem;
-
-    .navbar-right {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.5rem;
-    }
-
-    .wishlist-btn {
-      align-self: flex-end;
-    }
+  // Only color the icon
+  ::ng-deep .p-button-icon {
+    color: #000 !important;
   }
-}
 
-:host ::ng-deep {
-  .p-button.p-button-text {
-    color: #1f2937 !important;
+  &.p-button-text {
+    color: inherit;
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.1) !important;
     }
   }
+}
+.clicked-tab.p-button-outlined {
+  background-color: rgb(13, 165, 13) !important;
+  border-radius: 10px;
 
-  .p-dropdown {
-    border: 1px solid #d1d5db;
-
-    .p-dropdown-label {
-      color: #1f2937;
-      font-weight: 500;
-    }
+  ::ng-deep .p-button-icon {
+    color: #fff !important;
   }
+  ::ng-deep .p-button-label {
+    color: #fff !important;
+  }
+}
+.clicked-tab.p-button-outlined:hover {
+  background-color: darkgreen !important;
 }

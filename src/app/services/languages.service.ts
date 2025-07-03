@@ -13,7 +13,7 @@ export interface Language {
 export class LanguagesService {
   private languages: Language[] = [
     { code: 'en', name: 'English', direction: 'ltr', flag: '🇺🇸' },
-    { code: 'ar', name: 'العربية', direction: 'rtl', flag: '🇸🇦' },
+    { code: 'ar', name: 'العربية', direction: 'rtl', flag: 'AR' },
     { code: 'fr', name: 'Français', direction: 'ltr', flag: '🇫🇷' },
     { code: 'zh', name: '中文', direction: 'ltr', flag: '🇨🇳' },
   ];
