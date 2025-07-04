@@ -32,6 +32,7 @@ import { DropdownModule } from 'primeng/dropdown';
 export class NavbarComponent {
   searchQuery = signal('');
   // languages: Language[] = [];
+  mobileMenuOpen = signal(false);
 
   private readonly router = inject(Router);
   readonly wishlistService = inject(WishlistService);
@@ -39,6 +40,9 @@ export class NavbarComponent {
 
   readonly languages: Language[] = this.languageService.getLanguages();
 
+  toggleMobileMenu() {
+    this.mobileMenuOpen.set(!this.mobileMenuOpen());
+  }
 
   onSearch(): void {
     const query = this.searchQuery().trim();

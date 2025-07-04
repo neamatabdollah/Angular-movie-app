@@ -11,64 +11,130 @@
       <!-- <img src="assets/imgs/favicon.jpeg" alt="Logo" class="max-w-5rem md\:max-w-7rem" /> -->
     </div>
 
-    <!-- middle section -->
-    <div
-      class="flex flex-wrap justify-content-center md\:justify-content-center align-items-center gap-2"
+    <!-- Desktop Menu -->
+    <div class="hidden md:flex align-items-center gap-3">
+      <!-- middle section -->
+      <div
+        class="flex flex-wrap justify-content-center md\:justify-content-center align-items-center gap-2"
+      >
+        <p-button
+          label="Movies"
+          icon="pi pi-play"
+          [text]="true"
+          routerLink="/home"
+          routerLinkActive="p-button-outlined"
+          class="clicked-tab"
+        ></p-button>
+
+        <p-button
+          label="TV Shows"
+          icon="pi pi-desktop"
+          [text]="true"
+          routerLink="/tv-shows"
+          routerLinkActive="p-button-outlined"
+          class="clicked-tab"
+        ></p-button>
+      </div>
+
+      <!-- Right Section -->
+      <div class="flex align-items-center gap-3">
+        <!-- Language Dropdown -->
+        <p-dropdown
+          [options]="languages"
+          [ngModel]="languageService.language()"
+          (ngModelChange)="onLanguageChange($event)"
+          optionLabel="name"
+          [style]="{ 'min-width': '4rem' }"
+          [panelStyle]="{ 'min-width': '6rem' }"
+          placeholder="En"
+        >
+          <ng-template pTemplate="selectedItem" let-option>
+            <span *ngIf="option">{{ option.name }}</span>
+          </ng-template>
+          <ng-template pTemplate="item" let-option>
+            <div class="flex align-items-center gap-2">
+              <span>{{ option.flag }}</span>
+              <span>{{ option.name }}</span>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+        <!-- Wishlist Button -->
+        <p-button
+          icon="pi pi-heart-fill"
+          [text]="true"
+          severity="danger"
+          badgeSize="small"
+          pBadge
+          [value]="wishlistService.wishlistCount().toString()"
+          (onClick)="navigateToWishlist()"
+          class="wishlist-btn"
+        >
+        </p-button>
+      </div>
+    </div>
+
+    <!-- Hamburger Icon (Mobile Only) -->
+    <button
+      class="md:hidden p-2 bg-green-200 text-green-700"
+      style="border: 2px solid rgb(116, 160, 49); border-radius: 5px"
+      (click)="toggleMobileMenu()"
     >
-      <p-button
-        label="Movies"
-        icon="pi pi-play"
-        [text]="true"
-        routerLink="/home"
-        routerLinkActive="p-button-outlined"
-        class="clicked-tab"
-      ></p-button>
+      <i class="pi pi-bars text-xl"></i>
+    </button>
+  </div>
 
-      <p-button
-        label="TV Shows"
-        icon="pi pi-desktop"
-        [text]="true"
-        routerLink="/tv-shows"
-        routerLinkActive="p-button-outlined"
-        class="clicked-tab"
-      ></p-button>
-    </div>
+  <!-- Mobile Menu -->
+  <div
+    *ngIf="mobileMenuOpen()"
+    class="flex flex-column gap-3 mt-3 p-3 rounded-5 shadow-2 bg-yellow-50 md:hidden"
+  >
+    <p-button
+      label="Movies"
+      icon="pi pi-play"
+      [text]="true"
+      routerLink="/home"
+      routerLinkActive="p-button-outlined"
+      class="clicked-tab"
+    ></p-button>
 
-    <!-- Right Section -->
-    <div class="flex align-items-center gap-3">
-      <!-- Language Dropdown -->
-      <p-dropdown
-        [options]="languages"
-        [ngModel]="languageService.language()"
-        (ngModelChange)="onLanguageChange($event)"
-        optionLabel="name"
-        [style]="{ 'min-width': '4rem' }"
-        [panelStyle]="{ 'min-width': '6rem' }"
-        placeholder="En"
-      >
-        <ng-template pTemplate="selectedItem" let-option>
-          <span *ngIf="option">{{ option.name }}</span>
-        </ng-template>
-        <ng-template pTemplate="item" let-option>
-          <div class="flex align-items-center gap-2">
-            <span>{{ option.flag }}</span>
-            <span>{{ option.name }}</span>
-          </div>
-        </ng-template>
-      </p-dropdown>
+    <p-button
+      label="TV Shows"
+      icon="pi pi-desktop"
+      [text]="true"
+      routerLink="/tv-shows"
+      routerLinkActive="p-button-outlined"
+      class="clicked-tab"
+    ></p-button>
 
-      <!-- Wishlist Button -->
-      <p-button
-        icon="pi pi-heart-fill"
-        [text]="true"
-        severity="danger"
-        badgeSize="small"
-        pBadge
-        [value]="wishlistService.wishlistCount().toString()"
-        (onClick)="navigateToWishlist()"
-        class="wishlist-btn"
-      >
-      </p-button>
-    </div>
+    <p-dropdown
+      [options]="languages"
+      [ngModel]="languageService.language()"
+      (ngModelChange)="onLanguageChange($event)"
+      optionLabel="name"
+      [style]="{ 'min-width': '100%' }"
+      placeholder="En"
+    >
+      <ng-template pTemplate="selectedItem" let-option>
+        <span *ngIf="option">{{ option.name }}</span>
+      </ng-template>
+      <ng-template pTemplate="item" let-option>
+        <div class="flex align-items-center gap-2">
+          <span>{{ option.flag }}</span>
+          <span>{{ option.name }}</span>
+        </div>
+      </ng-template>
+    </p-dropdown>
+
+    <p-button
+      icon="pi pi-heart-fill"
+      [text]="true"
+      severity="danger"
+      badgeSize="small"
+      pBadge
+      [value]="wishlistService.wishlistCount().toString()"
+      (onClick)="navigateToWishlist()"
+      class="wishlist-btn"
+    ></p-button>
   </div>
 </nav>
